@@ -8,7 +8,7 @@ from AmidyneCrawler.spiders.cranefs import CranefsSpider
 
 def run_spider():
     process = CrawlerProcess(get_project_settings())
-    process.crawl(EmersonSpider)
+    process.crawl(CranefsSpider)
     process.start()
 
 if __name__ == "__main__":

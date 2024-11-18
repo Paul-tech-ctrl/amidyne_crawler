@@ -1,4 +1,4 @@
-import scrapy
+import scrapy, re
 from bs4 import BeautifulSoup
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
@@ -11,15 +11,19 @@ class CranefsSpider(CrawlSpider):
 
     rules = (
         Rule(LinkExtractor(allow=r"https://www.cranefs.com/product/"), callback="parse_item", follow=True),
-        Rule(LinkExtractor(restrict_xpaths=('//a[@class="next page-numbers"]')), follow=True),
+        # Rule(LinkExtractor(restrict_xpaths=('//a[@class="next page-numbers"]')), follow=True),
         )
 
     def parse_item(self, response):
         soup = BeautifulSoup(response.text, "html.parser")
         item = {}
+        item['Product url'] = response.url
         item["title"] = ' '.join(soup.select_one(".product__title-wrapper").stripped_strings)
-        item["introduction"] = soup.select_one(".product__introduction").get_text(strip=True)
-        item["content"] = ', '.join(soup.select_one(".product__content").stripped_strings)
+        # item["introduction"] = soup.select_one(".product__introduction").get_text(strip=True)
+        # item["content"] = ', '.join(soup.select_one(".product__content").stripped_strings)
+        product_details = soup.select_one(".product__details").get_text().strip()
+        stripped_prod_details = re.split(r'\n+', product_details)
+        item['Product details'] = stripped_prod_details
         specs = soup.select(".product__specification")
         item["specifications"] = {
             _itm.select_one("label").get_text(): _itm.select_one("div").get_text().replace("\n", " ")
