@@ -1,3 +1,6 @@
 # to run
-scrapy crawl emerson -o output.json
+scrapy crawl <name of spider>
+
+sample
+scrapy ccrawl cranefs
 

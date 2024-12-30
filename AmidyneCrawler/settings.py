@@ -92,3 +92,21 @@ ROBOTSTXT_OBEY = False
 REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
+
+FEEDS = {
+    'output.json': {
+        'format': 'json',
+        'encoding': 'utf8',
+        'indent': 4,  # Pretty-printed JSON
+        'store_empty': False,
+        'fields': None,  # Output all fields
+        'overwrite': True,
+    },
+    # 'output.csv': {
+    #     'format': 'csv',
+    #     'encoding': 'utf8',
+    #     'store_empty': False,
+    #     'fields': None,  # Output all fields
+    #     'overwrite': True,
+    # },
+}
